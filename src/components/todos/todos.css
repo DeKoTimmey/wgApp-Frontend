@@ -46,8 +46,12 @@ padding-left: 10px;
 
 .deletBtn{
   position: fixed !important;
+  visibility: hidden;
   bottom: 0;
   right: 0;
   margin-bottom: 70px !important;
   margin-right: 14px !important;
+}
+.visisble{
+    visibility: visible;
 }
