@@ -1,0 +1,95 @@
+import React from "react";
+import purple from "@material-ui/core/colors/purple";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+
+
+class SwitchBtn extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      lights: []
+    }
+  }
+  loadLights() {
+   fetch("http://116.203.42.55/lights")
+   .then(res => res.json())
+   .then((res) => {
+     this.setState({
+       lights: res.lightStates
+     })
+   })
+ }
+ componentDidMount() {
+   window.addEventListener('load', this.loadLights());
+}
+
+toggleLights(i) {
+  fetch("http://116.203.42.55/toggleLights" , {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    lightStates: i,
+ })
+})
+  .then(res => res.json())
+  .then((res) => {
+    this.loadLights()
+  })
+}
+
+
+
+render(){
+  return (
+    <FormGroup row>
+      <FormControlLabel
+        control={
+          <Switch
+            value="light1"
+            checked={this.state.lights[0] ? true : false }
+            onClick={()=>this.toggleLights(0)}
+          />
+        }
+        label={this.state.lights[0] ? "ON" : "OFF"}
+      />
+      <FormControlLabel
+        control={
+          <Switch
+            value="light2"
+            checked={this.state.lights[1] ? true : false }
+            onClick={()=>this.toggleLights(1)}
+          />
+        }
+        label={this.state.lights[1] ? "ON" : "OFF"}
+      />
+      <FormControlLabel
+        control={
+          <Switch
+            value="light3"
+            checked={this.state.lights[2] ? true : false }
+            onClick={()=>this.toggleLights(2)}
+          />
+        }
+        label={this.state.lights[2] ? "ON" : "OFF"}
+      />
+      <FormControlLabel
+        control={
+          <Switch
+            value="light4"
+            checked={this.state.lights[3] ? true : false }
+            onClick={()=>this.toggleLights(3)}
+          />
+        }
+        label={this.state.lights[3] ? "ON" : "OFF"}
+      />
+    </FormGroup>
+
+  );
+}}
+
+export default SwitchBtn;
