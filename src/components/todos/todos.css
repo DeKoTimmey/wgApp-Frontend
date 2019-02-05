@@ -52,6 +52,11 @@ padding-left: 10px;
   margin-bottom: 70px !important;
   margin-right: 14px !important;
 }
+
+.bgChecked{
+    background-color: rgba(59,255,69,0.3) !important;
+}
+
 .visisble{
     visibility: visible;
 }

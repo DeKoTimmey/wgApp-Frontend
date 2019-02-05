@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import SendIcon from '@material-ui/icons/Send';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -16,21 +15,27 @@ class Todos extends Component {
     super(props);
     this.state = {
       todos: [],
-      addClass: false
+      addClass: false,
+      addBgGreen: []
     }
     this.addTodo = this.addTodo.bind(this);
     this.loadTodos = this.loadTodos.bind(this);
     this.removeAllCheckedTodos = this.removeAllCheckedTodos.bind(this);
     this.toggleClass = this.toggleClass.bind(this);
+    this.toggleBgGreen = this.toggleBgGreen.bind(this);
   }
    loadTodos() {
+       let cardStates = [];
     fetch("http://116.203.42.55/todos")
     .then(res => res.json())
     .then((res) => {
+        for (var i = 0; i < res.list.length; i++) {
+            cardStates.push(res.list[i].checked);
+        }
       this.setState({
-        todos: res.list
+        todos: res.list,
+        addBgGreen: cardStates
       })
-      
       if (res.list.filter((val)=>{return val.checked;}).length >= 1) {
            this.toggleClass(true);
       }
@@ -40,9 +45,23 @@ class Todos extends Component {
     })
       }
 
-  toggleClass(e) {
-      e?this.setState({addClass: true}):this.setState({addClass: false});
-  }
+    toggleClass(e) {
+              e?this.setState({addClass: true}):this.setState({addClass: false});
+          }
+
+    toggleBgGreen(i,e) {
+        let addBgGreenArray = this.state.addBgGreen;
+        if (e) {
+            addBgGreenArray[i]=true;
+        }
+        else {
+            addBgGreenArray[i]=false;
+        }
+        this.setState({
+            addBgGreen: addBgGreenArray
+        });
+      }
+
    addTodo(e) {
      e.preventDefault();
      e.stopPropagation();
@@ -66,6 +85,7 @@ class Todos extends Component {
       return ;
     }
   }
+
   toggleTodo(i) {
    fetch("http://116.203.42.55/toggleTodo" , {
    method: 'POST',
@@ -82,6 +102,7 @@ class Todos extends Component {
      this.loadTodos()
    })
  }
+
  removeTodo(i) {
   fetch("http://116.203.42.55/remove" , {
   method: 'POST',
@@ -100,14 +121,13 @@ class Todos extends Component {
   })
 }
 
+componentDidMount() {
+ this.loadTodos();
 
-   componentDidMount() {
+  setInterval(() => {
     this.loadTodos();
-
-    setInterval(() => {
-      this.loadTodos();
-    }, 500);
-  }
+  }, 500);
+}
 
 
 removeAllCheckedTodos() {
@@ -127,15 +147,19 @@ fetch("http://116.203.42.55/removeAllChecked" , {
 
   render() {
       let deletBtn = ["deletBtn"];
+      let greenArray = this.state.addBgGreen;
       if(this.state.addClass) {
           deletBtn.push('visisble');
-    }
+      }
+
+
+
     return (
       <div className="Container">
         <div className="ToDosContainer">
         {
           this.state.todos.map((e, i) => (
-            <Card className="todoCard" key={i}>
+            <Card className={greenArray[i]?  'todoCard bgChecked': 'todoCard'} key={i}>
               <CardContent>
                 <Typography variant="subtitle1" color="textSecondary">
                   {e.user}
@@ -146,7 +170,7 @@ fetch("http://116.203.42.55/removeAllChecked" , {
               </CardContent>
               <CardActions>
                 <Button onClick={()=>this.toggleTodo(i)}>
-              <Checkbox color="primary" checked={e.checked} />
+              <Checkbox color="primary" checked={e.checked} onChange={()=>(this.toggleBgGreen(i,e.checked))}/>
               </Button>
               <Button onClick={()=>this.removeTodo(i)}>
                 <DeleteOutlineIcon />
