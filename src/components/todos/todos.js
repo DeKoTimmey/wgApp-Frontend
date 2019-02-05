@@ -16,10 +16,12 @@ class Todos extends Component {
     super(props);
     this.state = {
       todos: [],
+      addClass: false
     }
     this.addTodo = this.addTodo.bind(this);
     this.loadTodos = this.loadTodos.bind(this);
     this.removeAllCheckedTodos = this.removeAllCheckedTodos.bind(this);
+    this.toggleClass = this.toggleClass.bind(this);
   }
    loadTodos() {
     fetch("http://116.203.42.55/todos")
@@ -28,9 +30,19 @@ class Todos extends Component {
       this.setState({
         todos: res.list
       })
+      
+      if (res.list.filter((val)=>{return val.checked;}).length >= 1) {
+           this.toggleClass(true);
+      }
+      else {
+          this.toggleClass(false);
+      }
     })
-  }
+      }
 
+  toggleClass(e) {
+      e?this.setState({addClass: true}):this.setState({addClass: false});
+  }
    addTodo(e) {
      e.preventDefault();
      e.stopPropagation();
@@ -114,6 +126,10 @@ fetch("http://116.203.42.55/removeAllChecked" , {
  }
 
   render() {
+      let deletBtn = ["deletBtn"];
+      if(this.state.addClass) {
+          deletBtn.push('visisble');
+    }
     return (
       <div className="Container">
         <div className="ToDosContainer">
@@ -140,7 +156,7 @@ fetch("http://116.203.42.55/removeAllChecked" , {
           ))
         }
         </div>
-        <Button  variant="contained" className="deletBtn" color="secondary"  onClick={()=>this.removeAllCheckedTodos()}>
+        <Button  variant="contained" className={deletBtn.join(' ')}  color="secondary"  onClick={()=>this.removeAllCheckedTodos()}>
           <DeleteOutlineIcon />
         </Button>
         <div className="ToDosCreater">
