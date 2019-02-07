@@ -23,6 +23,7 @@ class Todos extends Component {
     this.removeAllCheckedTodos = this.removeAllCheckedTodos.bind(this);
     this.toggleClass = this.toggleClass.bind(this);
     this.toggleBgGreen = this.toggleBgGreen.bind(this);
+    this.timer = null;
   }
    loadTodos() {
        let cardStates = [];
@@ -124,10 +125,14 @@ class Todos extends Component {
 componentDidMount() {
  this.loadTodos();
 
-  setInterval(() => {
+  this.timer = setInterval(() => {
     this.loadTodos();
   }, 500);
 }
+  
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
 
 removeAllCheckedTodos() {
@@ -159,7 +164,7 @@ fetch("http://116.203.42.55/removeAllChecked" , {
         <div className="ToDosContainer">
         {
           this.state.todos.map((e, i) => (
-            <Card className={greenArray[i]?  'todoCard bgChecked': 'todoCard'} key={i}>
+            <Card className={e.checked?  'todoCard bgChecked': 'todoCard'} key={i}>
               <CardContent>
                 <Typography variant="subtitle1" color="textSecondary">
                   {e.user}
