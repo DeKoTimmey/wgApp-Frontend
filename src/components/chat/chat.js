@@ -9,7 +9,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 
-import Snackbar from '@material-ui/core/Snackbar';
 
 
 import './chat.css';
@@ -31,6 +30,7 @@ class Chat extends Component {
     this.currentTime = this.currentTime.bind(this);
      this.scrollToEnd =  this.scrollToEnd.bind(this);
     this.timer = null;
+    this.scrollToEndTimeOut = null;
   }
 
 
@@ -43,13 +43,7 @@ class Chat extends Component {
         massage: res.massageList
       })
     })
-    console.log(this.state.scrollToPageEnd);
-if (this.state.scrollToPageEnd == false) {
-    this.scrollToEnd();
-    this.setState({
-      scrollToPageEnd: true
-    })
-}
+
  }
 
 
@@ -73,6 +67,9 @@ if (this.state.scrollToPageEnd == false) {
       this.InputBase.value = "";
       this.loadMassages()
     })
+    .then(() => {
+      this.scrollToEnd();
+    })
     if (this.InputBase.value === "") {
       return ;
     }
@@ -88,22 +85,30 @@ currentTime(){
     return time;
 }
 
-scrollToEnd(){
-    let endOfPageY = document.documentElement.offsetHeight;
-    window.scrollTo(0,endOfPageY);
+async scrollToEnd(){
+  let endOfPageY = document.documentElement.offsetHeight;
+
+    setTimeout(function() {
+      window.scrollTo(0,endOfPageY)}, 40);
+
+
     console.log("endOfPageY: " + endOfPageY);
-    console.log("window.pageYOffset: " + window.pageYOffset);
 }
 
 componentDidMount() {
  this.loadMassages();
+   this.scrollToEnd();
   this.timer = setInterval(() => {
     this.loadMassages();
   }, 500);
+  this.scrollToEndTimeOut = setTimeout(() => {
+    this.scrollToEnd();
+  },100)
 }
 
   componentWillUnmount() {
     clearInterval(this.timer);
+    clearTimeout(this.scrollToEndTimeOut);
   }
 
   render() {
