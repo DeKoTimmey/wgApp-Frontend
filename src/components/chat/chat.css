@@ -5,7 +5,7 @@ overflow-x: hidden;
 }
 .ToDosContainer{
   width: 100%;
-  padding: 50px 0;
+  padding-bottom: 50px;
 }
 
 .todoCard {
@@ -59,4 +59,32 @@ padding-left: 10px;
 
 .visisble{
     visibility: visible;
+}
+
+.massageCard{
+    margin: 10px;
+    max-width: 95%;
+    align-self: flex-start;
+}
+
+.ownMessage{
+    margin: 10px;
+    max-width: 95%;
+    align-self: flex-end;
+}
+
+
+.messagesContainer{
+    display: flex;
+flex-direction: column;
+padding: 50px 0;
+}
+
+.massageCardContent{
+    display: flex;
+    flex-direction: column;
+}
+
+.time{
+    align-self: flex-end;
 }

@@ -53,7 +53,7 @@ class MenuAppBar extends Component {
 
   render() {
     return (
-      <AppBar className={this.setBarColor()} position="static">
+      <AppBar className={this.setBarColor()} position="fixed">
         <Toolbar>
           <IconButton color="inherit" aria-label="Menu">
             <SideMenu />

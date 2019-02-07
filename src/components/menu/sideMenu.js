@@ -28,6 +28,9 @@ export default class SideMenu extends React.Component {
   };
 
 
+// TODO: add Badgets 
+
+
   render() {
     const sideList = (
       <div>

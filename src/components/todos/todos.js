@@ -15,14 +15,12 @@ class Todos extends Component {
     super(props);
     this.state = {
       todos: [],
-      addClass: false,
-      addBgGreen: []
+      addClass: false
     }
     this.addTodo = this.addTodo.bind(this);
     this.loadTodos = this.loadTodos.bind(this);
     this.removeAllCheckedTodos = this.removeAllCheckedTodos.bind(this);
     this.toggleClass = this.toggleClass.bind(this);
-    this.toggleBgGreen = this.toggleBgGreen.bind(this);
     this.timer = null;
   }
    loadTodos() {
@@ -34,8 +32,7 @@ class Todos extends Component {
             cardStates.push(res.list[i].checked);
         }
       this.setState({
-        todos: res.list,
-        addBgGreen: cardStates
+        todos: res.list
       })
       if (res.list.filter((val)=>{return val.checked;}).length >= 1) {
            this.toggleClass(true);
@@ -50,18 +47,6 @@ class Todos extends Component {
               e?this.setState({addClass: true}):this.setState({addClass: false});
           }
 
-    toggleBgGreen(i,e) {
-        let addBgGreenArray = this.state.addBgGreen;
-        if (e) {
-            addBgGreenArray[i]=true;
-        }
-        else {
-            addBgGreenArray[i]=false;
-        }
-        this.setState({
-            addBgGreen: addBgGreenArray
-        });
-      }
 
    addTodo(e) {
      e.preventDefault();
@@ -129,7 +114,7 @@ componentDidMount() {
     this.loadTodos();
   }, 500);
 }
-  
+
   componentWillUnmount() {
     clearInterval(this.timer);
   }
@@ -157,14 +142,12 @@ fetch("http://116.203.42.55/removeAllChecked" , {
           deletBtn.push('visisble');
       }
 
-
-
     return (
       <div className="Container">
         <div className="ToDosContainer">
         {
           this.state.todos.map((e, i) => (
-            <Card className={e.checked?  'todoCard bgChecked': 'todoCard'} key={i}>
+            <Card className={e.checked?  'todoCard bgChecked':'todoCard'} key={i}>
               <CardContent>
                 <Typography variant="subtitle1" color="textSecondary">
                   {e.user}
@@ -175,7 +158,7 @@ fetch("http://116.203.42.55/removeAllChecked" , {
               </CardContent>
               <CardActions>
                 <Button onClick={()=>this.toggleTodo(i)}>
-              <Checkbox color="primary" checked={e.checked} onChange={()=>(this.toggleBgGreen(i,e.checked))}/>
+              <Checkbox color="primary" checked={e.checked} />
               </Button>
               <Button onClick={()=>this.removeTodo(i)}>
                 <DeleteOutlineIcon />
