@@ -28,7 +28,7 @@ export default class SideMenu extends React.Component {
   };
 
 
-// TODO: add Badgets 
+// TODO: add Badgets
 
 
   render() {
@@ -50,6 +50,10 @@ export default class SideMenu extends React.Component {
             <ListItem  component={Link} to='../calendar' button>
               <ListItemIcon><CalendarTodayIcon/></ListItemIcon>
               <ListItemText primary="Kalender" />
+            </ListItem>
+            <ListItem  component={Link} to='../registry' button>
+              <ListItemIcon><CalendarTodayIcon/></ListItemIcon>
+              <ListItemText primary="Reg" />
             </ListItem>
         </List>
 
