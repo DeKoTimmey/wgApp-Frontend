@@ -16,7 +16,7 @@ class MenuAppBar extends Component {
 
   setHeading = () => {
     switch (window.location.pathname) {
-      case "/":
+      case "/lights":
         return "Lights";
         break;
       case "/chat":
@@ -29,12 +29,12 @@ class MenuAppBar extends Component {
       return "Kalender";
         break;
       default:
-        return "default";
+        return "";
     }
   }
   setBarColor = () => {
     switch (window.location.pathname) {
-      case "/":
+      case "/lights":
         return "lights";
         break;
       case "/chat":

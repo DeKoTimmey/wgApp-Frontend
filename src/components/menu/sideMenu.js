@@ -35,7 +35,7 @@ export default class SideMenu extends React.Component {
     const sideList = (
       <div>
         <List>
-            <ListItem component={Link} to='../' button>
+            <ListItem component={Link} to='../lights' button>
               <ListItemIcon><HighlightIcon/></ListItemIcon>
               <ListItemText primary="Lights" />
             </ListItem>
@@ -51,12 +51,7 @@ export default class SideMenu extends React.Component {
               <ListItemIcon><CalendarTodayIcon/></ListItemIcon>
               <ListItemText primary="Kalender" />
             </ListItem>
-            <ListItem  component={Link} to='../registry' button>
-              <ListItemIcon><CalendarTodayIcon/></ListItemIcon>
-              <ListItemText primary="Reg" />
-            </ListItem>
         </List>
-
       </div>
     );
 

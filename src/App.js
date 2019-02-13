@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Container from './components/container.js';
-import MenuAppBar from './components/menu/menuBar.js';
+import Landing from './components/landing/landing.js';
+import Register from './components/auth/register.js';
+import Login from './components/auth/login.js';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store.js";
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -13,12 +17,15 @@ class App extends Component {
 
   render() {
     return (
+    <Provider store={store}>
       <Router>
-        <div>
-          <MenuAppBar />
-          <Container />
-        </div>  
+        <div className="App" >
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+        </div>
       </Router>
+    </Provider>
     );
   }
 }

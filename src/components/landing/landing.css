@@ -1,0 +1,7 @@
+.f_column{
+    flex-direction:column;
+}
+
+.loginBtn{
+    margin-left: 20px !important;
+}
