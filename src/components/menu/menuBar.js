@@ -23,11 +23,14 @@ class MenuAppBar extends Component {
       return "Chat";
         break;
       case "/todos":
-      return "Todos";
+      return "Einkausliste";
         break;
       case "/calendar":
       return "Kalender";
         break;
+        case "/dashboard":
+        return "Dashboard";
+          break;
       default:
         return "";
     }

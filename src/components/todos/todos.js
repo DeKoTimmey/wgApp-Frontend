@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import Checkbox from '@material-ui/core/Checkbox';
 import './todos.css';
+import MenuAppBar from '../menu/menuBar.js';
 class Todos extends Component {
   constructor(props){
     super(props);
@@ -144,6 +145,7 @@ fetch("http://116.203.42.55/removeAllChecked" , {
 
     return (
       <div className="Container">
+                    <MenuAppBar />
         <div className="ToDosContainer">
         {
           this.state.todos.map((e, i) => (

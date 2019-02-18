@@ -9,6 +9,7 @@ import SmokingRooms from '@material-ui/icons/SmokingRooms';
 import VideogameAsset from '@material-ui/icons/VideogameAsset';
 import Fastfood from '@material-ui/icons/Fastfood';
 import LocalCafe from '@material-ui/icons/LocalCafe';
+import MenuAppBar from '../menu/menuBar.js';
 import './lights.css';
 class LightsSettings extends Component {
   constructor(props){
@@ -21,6 +22,7 @@ class LightsSettings extends Component {
   render() {
     return (
       <div className="App">
+          <MenuAppBar />
         <div className="lightsContainer">
         <List>
         <ListItem>

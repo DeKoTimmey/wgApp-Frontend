@@ -6,14 +6,18 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HighlightIcon from '@material-ui/icons/Highlight';
 import MessageIcon from '@material-ui/icons/Message';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Link} from 'react-router-dom';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import Button from '@material-ui/core/Button';
+import { logoutUser } from "../../actions/authActions";
+import './sideMenu.css';
 
-
-
-export default class SideMenu extends React.Component {
+class SideMenu extends React.Component {
   constructor(props){
     super(props);
   this.state = {
@@ -28,6 +32,12 @@ export default class SideMenu extends React.Component {
   };
 
 
+  onLogoutClick = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+  };
+
+
 // TODO: add Badgets
 
 
@@ -35,6 +45,10 @@ export default class SideMenu extends React.Component {
     const sideList = (
       <div>
         <List>
+            <ListItem component={Link} to='../dashboard' button>
+              <ListItemIcon><DashboardIcon/></ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItem>
             <ListItem component={Link} to='../lights' button>
               <ListItemIcon><HighlightIcon/></ListItemIcon>
               <ListItemText primary="Lights" />
@@ -44,8 +58,8 @@ export default class SideMenu extends React.Component {
               <ListItemText primary="Chat" />
             </ListItem>
             <ListItem  component={Link} to='../todos' button>
-              <ListItemIcon><AssignmentIcon/></ListItemIcon>
-              <ListItemText primary="Todos" />
+              <ListItemIcon><ShoppingBasketIcon/></ListItemIcon>
+              <ListItemText primary="Einkausliste" />
             </ListItem>
             <ListItem  component={Link} to='../calendar' button>
               <ListItemIcon><CalendarTodayIcon/></ListItemIcon>
@@ -71,8 +85,24 @@ export default class SideMenu extends React.Component {
           >
             {sideList}
           </div>
+          <Button variant="contained" className="logoutBtn" color="primary" onClick={this.onLogoutClick} >
+          Logout
+          </Button>
         </SwipeableDrawer>
       </div>
     );
   }
 }
+
+
+SideMenu.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(SideMenu);

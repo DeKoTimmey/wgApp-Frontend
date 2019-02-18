@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { logoutUser } from "../../actions/authActions";
+
+
 import InputBase from '@material-ui/core/InputBase';
 import Paper from '@material-ui/core/Paper';
 import SendIcon from '@material-ui/icons/Send';
@@ -8,7 +14,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
-
+import MenuAppBar from '../menu/menuBar.js';
 
 
 import './chat.css';
@@ -21,7 +27,7 @@ class Chat extends Component {
   constructor(props){
     super(props);
     this.state = {
-        user: "Tim",
+        user: this.props.auth.user.name,
         massage: [],
         scrollToPageEnd: false
     }
@@ -115,6 +121,7 @@ componentDidMount() {
 
     return (
       <div className="Container">
+                    <MenuAppBar />
         <div className="messagesContainer">
         {
           this.state.massage.map((e, i) => (
@@ -149,4 +156,14 @@ componentDidMount() {
   }
 }
 
-export default Chat;
+Chat.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Chat);
