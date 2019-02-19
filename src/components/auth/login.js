@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
-
+import Register from './register';
+import './register.css';
 
 
 import InputBase from '@material-ui/core/InputBase';
@@ -19,7 +20,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import './register.css';
 
 
 class Login extends Component {
@@ -108,6 +108,9 @@ componentDidMount() {
                 />
                 </div>
                 <CardActions className="cardAction">
+                    <Typography component={Link} to='./register' variant="" color="primary" className="hoverLink" >
+                        Registrieren
+                    </Typography>
                 <Button variant="contained" color="primary" type="submit">
                 Login
                 </Button>

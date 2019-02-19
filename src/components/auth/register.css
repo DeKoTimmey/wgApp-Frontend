@@ -27,3 +27,31 @@
     justify-content: flex-end;
 
 }
+
+
+.hoverLink{
+    text-decoration: none;
+}
+
+.hoverLink:hover{
+    cursor: pointer;
+}
+
+.fullWidthInput{
+    width: 100%;
+}
+
+
+.radios{
+    flex-direction: row !important;
+    justify-content: center;
+
+}
+
+
+@media only screen and (max-width: 492px) {
+    .marginLeft{
+        margin-left: 0px !important;
+    }
+
+}
