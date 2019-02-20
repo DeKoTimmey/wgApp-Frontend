@@ -1,0 +1,13 @@
+.Kalender{
+        margin-top: 50px;
+}
+
+.modalContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalSetter{
+    padding: 20px;
+}
